@@ -202,6 +202,7 @@ GameObject:
   - component: {fileID: 2334085158956566121}
   - component: {fileID: 4547160135494115812}
   - component: {fileID: 2534173884356747960}
+  - component: {fileID: 266916968716146599}
   m_Layer: 5
   m_Name: ModeButton
   m_TagString: Untagged
@@ -298,9 +299,9 @@ MonoBehaviour:
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
-    m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 0}
-    m_SelectedSprite: {fileID: 21300000, guid: 78685c80fde6841458837f1afd63e9cc, type: 3}
+    m_HighlightedSprite: {fileID: 21300000, guid: 78685c80fde6841458837f1afd63e9cc, type: 3}
+    m_PressedSprite: {fileID: 21300000, guid: 78685c80fde6841458837f1afd63e9cc, type: 3}
+    m_SelectedSprite: {fileID: 0}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
@@ -313,6 +314,27 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &266916968716146599
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3661099333698442210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bedac0db6afe22b459a97863627e6b51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  transition:
+    active: {fileID: 21300000, guid: 78685c80fde6841458837f1afd63e9cc, type: 3}
+    inactive: {fileID: 21300000, guid: 31e8081580a181241ab145ba49a83ab0, type: 3}
+  mainImage: {fileID: 4547160135494115812}
+  description: {fileID: 7255383690773445090}
+  count: 0
+  cubeImage: {fileID: 3989247658366717949}
+  cubeColor: {r: 1, g: 1, b: 1, a: 1}
+  choosenScale: 1.2
 --- !u!1 &5832189502051580803
 GameObject:
   m_ObjectHideFlags: 0
