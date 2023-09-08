@@ -6,8 +6,8 @@ public class MainMenu : ViewBase {
 	[SerializeField] ModeButton[] buttons;
 	[SerializeField] StartButton startButton;
 
-	int choosenCountToSpawn = 0;
-	public bool AwailableToStart => choosenCountToSpawn > 0;
+	GameplayManager.Mode choosenMode;
+	public bool AwailableToStart => choosenMode != GameplayManager.Mode.none;
 	private void OnEnable () {
 		Initialize ();
 		Events.UI.OnChangeMode += OnChangeCountToSpawn;
@@ -23,8 +23,8 @@ public class MainMenu : ViewBase {
 		startButton.Initialize ();
 	}
 
-	void OnChangeCountToSpawn(int count) {
-		choosenCountToSpawn = count;
+	void OnChangeCountToSpawn(GameplayManager.Mode newMode) {
+		choosenMode = newMode;
 		Refresh ();
 	}
 
@@ -32,10 +32,10 @@ public class MainMenu : ViewBase {
 		if (!AwailableToStart)
 			return;
 		else
-			Events.Gameplay.OnStartGame.Invoke (choosenCountToSpawn);
+			Events.Gameplay.OnStartGame.Invoke (choosenMode);
 	}
 
 	void Refresh () {
-		startButton.ToggleTransition (choosenCountToSpawn > 0);
+		startButton.ToggleTransition (AwailableToStart);
 	}
 }

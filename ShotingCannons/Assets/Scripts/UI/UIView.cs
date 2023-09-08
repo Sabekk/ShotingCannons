@@ -17,7 +17,7 @@ public class UIView : MonoBehaviour
 		Events.UI.OnReturnToMenu -= OnReturnToMenu;
 	}
 
-	void OnStartNewGame (int count) {
+	void OnStartNewGame (GameplayManager.Mode mode) {
 		mainMenu.Deactivate ();
 	}
 	void OnGameOver () {

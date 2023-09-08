@@ -3,14 +3,14 @@ using UnityEngine;
 using UnityEngine.UI;
 public class ModeButton : UIButton {
 	[SerializeField] TMP_Text description;
-	[SerializeField] int count;
 	[SerializeField] Image cubeImage;
 	[SerializeField] Color cubeColor;
 	[SerializeField] float choosenScale;
+	[SerializeField] GameplayManager.Mode mode;
 	public override void Initialize () {
 		base.Initialize ();
 		cubeImage.color = cubeColor;
-		description.SetText (count.ToString ());
+		description.SetText (GameplayManager.Instance.GetModeCannonsCount(mode).ToString ());
 		ToggleTransition (false);
 	}
 	private void OnEnable () {
@@ -21,11 +21,11 @@ public class ModeButton : UIButton {
 	}
 
 	protected override void OnClick () {
-		Events.UI.OnChangeMode.Invoke (count);
+		Events.UI.OnChangeMode.Invoke (mode);
 	}
 
-	void OnChangeMode (int count) {
-		if (this.count == count) {
+	void OnChangeMode (GameplayManager.Mode newMode) {
+		if (mode == newMode) {
 			transform.localScale = Vector3.one * choosenScale;
 			ToggleTransition (true);
 		} else {
