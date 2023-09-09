@@ -128,7 +128,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51ddeb8adb4fed14eae8b91c38d9af96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bullet: {fileID: 1858130707800476359, guid: 9dcb971d0525bff4d80ca543bc09b4ff, type: 3}
   collider: {fileID: -8970235971976860690}
+  rilfe: {fileID: 5906279062414259950}
 --- !u!58 &-8970235971976860690
 CircleCollider2D:
   m_ObjectHideFlags: 0

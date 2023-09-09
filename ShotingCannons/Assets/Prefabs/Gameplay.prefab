@@ -52,7 +52,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameMods:
   - mode: 1
-    cannonScale: 1
+    cannonScale: 50
     cannonsCount: 50
   - mode: 2
     cannonScale: 0.9

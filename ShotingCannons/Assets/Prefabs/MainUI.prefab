@@ -246,6 +246,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7925215889036322189}
     m_Modifications:
+    - target: {fileID: 964199705665575395, guid: f8ba3fc64695823439bde4001631641b, type: 3}
+      propertyPath: gameMods.Array.data[0].cannonsCount
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1468728826161690658, guid: f8ba3fc64695823439bde4001631641b, type: 3}
       propertyPath: m_Name
       value: Gameplay
@@ -299,8 +303,8 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f8ba3fc64695823439bde4001631641b, type: 3}
---- !u!4 &4967012258144891112 stripped
-Transform:
+--- !u!224 &4967012258144891112 stripped
+RectTransform:
   m_CorrespondingSourceObject: {fileID: 6253833147826613219, guid: f8ba3fc64695823439bde4001631641b, type: 3}
   m_PrefabInstance: {fileID: 1307252564545772299}
   m_PrefabAsset: {fileID: 0}

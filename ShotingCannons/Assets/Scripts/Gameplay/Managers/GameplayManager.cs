@@ -94,13 +94,15 @@ public class GameplayManager : MonoSingleton<GameplayManager> {
 			}
 		}
 	}
-
 	public int GetModeCannonsCount (Mode mode) {
 		foreach (var gameMode in gameMods)
 			if (gameMode.mode == mode) {
 				return gameMode.cannonsCount;
 			}
 		return 0;
+	}
+	public void MakeShotInBattlefield (Bullet bullet) {
+		bullet.gameObject.transform.SetParent (battleField);
 	}
 
 	[System.Serializable]
