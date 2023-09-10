@@ -52,7 +52,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameMods:
   - mode: 1
-    cannonScale: 50
+    cannonScale: 1
     cannonsCount: 50
   - mode: 2
     cannonScale: 0.9
@@ -79,7 +79,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2298306596615423297
 RectTransform:
   m_ObjectHideFlags: 0

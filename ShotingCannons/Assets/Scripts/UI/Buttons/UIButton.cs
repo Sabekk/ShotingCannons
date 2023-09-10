@@ -19,7 +19,6 @@ public abstract class UIButton : MonoBehaviour {
 	protected virtual void OnClick () {
 
 	}
-
 	public virtual void ToggleTransition (bool state) {
 		mainImage.sprite = state ? transition.active : transition.inactive;
 	}

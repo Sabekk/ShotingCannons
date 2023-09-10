@@ -23,6 +23,16 @@ public class MainMenu : ViewBase {
 		startButton.Initialize ();
 	}
 
+	public override void Activate () {
+		base.Activate ();
+		choosenMode = GameplayManager.Mode.none;
+		foreach (var button in buttons) {
+			button.ToggleTransition (false);
+		}
+
+		Refresh ();
+	}
+
 	void OnChangeCountToSpawn(GameplayManager.Mode newMode) {
 		choosenMode = newMode;
 		Refresh ();

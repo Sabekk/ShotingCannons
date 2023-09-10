@@ -16,9 +16,13 @@ public class GameplayManager : MonoSingleton<GameplayManager> {
 	float widthOffset = 15;
 	float heightOffset = 15;
 
+	int objectsInGame = 0;
+
 	protected override void Awake () {
 		base.Awake ();
 		Events.Gameplay.OnStartGame += OnStartNewGame;
+		Events.Gameplay.OnCannonDestoyed += OnCannonDestroyed;
+		Events.Gameplay.OnGameOver += OnGameOver;
 	}
 	private void Start () {
 		possiblePositions = new List<Vector2> ();
@@ -31,18 +35,25 @@ public class GameplayManager : MonoSingleton<GameplayManager> {
 
 	private void OnDestroy () {
 		Events.Gameplay.OnStartGame -= OnStartNewGame;
+		Events.Gameplay.OnCannonDestoyed -= OnCannonDestroyed;
+		Events.Gameplay.OnGameOver -= OnGameOver;
 	}
 	void OnStartNewGame (Mode mode) {
+		battleField.gameObject.SetActive (true);
+
+		objectsInGame = 0;
 		ChangeGameMode (mode);
 		GeneratePossiblePositions (currentMode.cannonsCount);
 		Cannon cannon = Resources.Load ("Cannon", typeof (Cannon)) as Cannon;
-		cannon.Initialzie (currentMode.cannonScale);
 		Vector2 spawnPoint = Vector2.zero;
 		List<Vector2> neighbourPos = new List<Vector2> ();
-		float space = cannon.Width;
 
 		for (int i = 0; i < currentMode.cannonsCount; i++) {
 			Cannon spawnedCannon = Instantiate (cannon, battleField);
+			spawnedCannon.Initialzie (currentMode.cannonScale);
+			objectsInGame++;
+
+			float space = spawnedCannon.Width;
 			bool positionSet = false;
 
 			while (!positionSet) {
@@ -72,6 +83,18 @@ public class GameplayManager : MonoSingleton<GameplayManager> {
 			}
 		}
 	}
+	void OnCannonDestroyed () {
+		objectsInGame--;
+		if (objectsInGame <= 1)
+			Events.Gameplay.OnGameOver.Invoke ();
+	}
+
+	void OnGameOver () {
+		for (int i = battleField.childCount - 1; i >= 0; i--) {
+			Destroy (battleField.GetChild (0).gameObject);
+		}
+		battleField.gameObject.SetActive (false);
+	}
 
 	void ChangeGameMode (Mode mode) {
 		foreach (var gameMode in gameMods)
@@ -81,13 +104,16 @@ public class GameplayManager : MonoSingleton<GameplayManager> {
 			}
 	}
 	void GeneratePossiblePositions (int count) {
+		if (count < 50)
+			count = 50;
+		int countToFind = count / 2;
 		possiblePositions.Clear ();
-		float baseWidth = widthfOfField / (count / 2);
+		float baseWidth = widthfOfField / (countToFind);
 		float startPointInWidth = -(widthfOfField / 2);
-		float baseHeight = heightfOfField / (count / 2);
+		float baseHeight = heightfOfField / (countToFind);
 		float startPointInHeight = -(heightfOfField / 2);
-		for (int i = 1; i < count / 2; i++) {
-			for (int j = 1; j < count / 2; j++) {
+		for (int i = 1; i < countToFind; i++) {
+			for (int j = 1; j < countToFind; j++) {
 				float possibleX = startPointInWidth + baseWidth * i + Random.Range (0.5f, widthOffset);
 				float possibleY = startPointInHeight + baseHeight * j + Random.Range (0.5f, heightOffset);
 				possiblePositions.Add (new Vector2 (possibleX, possibleY));

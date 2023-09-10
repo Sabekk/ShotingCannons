@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Cannon : MonoBehaviour {
 	[SerializeField] Bullet bullet;
+	[SerializeField] GameObject body;
 	[SerializeField] CircleCollider2D collider;
 	[SerializeField] Transform rilfe;
 	public float Radius => collider != null ? collider.radius : 0;
@@ -19,37 +20,86 @@ public class Cannon : MonoBehaviour {
 	float rotationTimer;
 	float shotingTimer;
 
-	bool readyToShot;
+	float currentScale;
+	Quaternion nextRotate = new Quaternion (0, 0, 0, 0);
 
-	float currentScale = 1;
-	Quaternion nextRotate;
+	int lives = 1;
+	bool recovering;
+	float recoverTime = 2;
+	float recorerTimer;
+
 	private void Awake () {
+		Events.Gameplay.OnCannonGetHit += OnGetHit;
+	}
+	private void OnDestroy () {
+		Events.Gameplay.OnCannonGetHit -= OnGetHit;
 	}
 	private void Update () {
-		rotationTimer += Time.deltaTime;
-		shotingTimer += Time.deltaTime;
-		if (rotationTimer >= nextRotation) {
-			RatateCannon ();
-		}
-		if (shotingTimer >= shotingTime)
-			Shot ();
+		if (!recovering) {
+			rotationTimer += Time.deltaTime;
+			shotingTimer += Time.deltaTime;
+			if (rotationTimer >= nextRotation) {
+				RotateCannon ();
+			}
+			if (shotingTimer >= shotingTime)
+				Shot ();
 
-		transform.rotation = Quaternion.Lerp (transform.rotation, nextRotate, rotationSpeed * Time.deltaTime);
+			transform.rotation = Quaternion.Lerp (transform.rotation, nextRotate, rotationSpeed * Time.deltaTime);
+
+		} else {
+			recorerTimer += Time.deltaTime;
+			if (recorerTimer >= recoverTime) {
+				recorerTimer = 0;
+				recovering = false;
+				ChangeBodyStatus (true);
+			}
+		}
 	}
-	void RatateCannon () {
+
+	public void Initialzie (float scale) {
+		transform.localScale = Vector3.one * scale;
+		currentScale = scale;
+		nextRotation = Random.Range (0.0f, rotationTime);
+		CheckNextRotate ();
+	}
+	void RotateCannon () {
 		rotationTimer = 0;
 		nextRotation = Random.Range (0.0f, rotationTime);
 		nextRotate = Quaternion.Euler (Vector3.forward * Random.Range (0.0f, 360.0f));
+		CheckNextRotate ();
+	}
+
+	void CheckNextRotate () {
+		if (nextRotate.x + nextRotate.y + nextRotate.z + nextRotate.w == 0)
+			nextRotate = Quaternion.identity;
 	}
 	void Shot () {
 		shotingTimer = 0;
 		Bullet bullet = Instantiate (this.bullet, rilfe.position, rilfe.rotation);
 		GameplayManager.Instance.MakeShotInBattlefield (bullet);
-		bullet.Initialize (currentScale);
+		bullet.Initialize (currentScale, gameObject);
 	}
-	public void Initialzie (float scale) {
-		transform.localScale = Vector3.one * scale;
-		currentScale = scale;
-		nextRotation = Random.Range (0.0f, rotationTime);
+	void OnGetHit (GameObject hittedObject) {
+		if (hittedObject != gameObject)
+			return;
+		if (recovering)
+			return;
+		if (lives <= 0)
+			return;
+
+		lives--;
+		if (lives <= 0) {
+			Destroy (gameObject);
+			Events.Gameplay.OnCannonDestoyed.Invoke ();
+		} else {
+			ChangeBodyStatus (false);
+			recovering = true;
+		}
 	}
+
+	void ChangeBodyStatus (bool isEnable) {
+		body.SetActive (isEnable);
+		collider.enabled = isEnable;
+	}
+
 }
