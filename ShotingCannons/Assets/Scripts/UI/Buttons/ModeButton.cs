@@ -20,7 +20,7 @@ public class ModeButton : UIButton {
 		Events.UI.OnChangeMode -= OnChangeMode;
 	}
 
-	protected override void OnClick () {
+	public override void OnClick () {
 		Events.UI.OnChangeMode.Invoke (mode);
 	}
 	public override void ToggleTransition (bool state) {

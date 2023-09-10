@@ -1,11 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class UIView : MonoBehaviour
 {
 	[SerializeField] MainMenu mainMenu;
 	[SerializeField] GameOver gameOverView;
+
 	private void Awake () {
 		Events.Gameplay.OnStartGame += OnStartNewGame;
 		Events.Gameplay.OnGameOver += OnGameOver;
@@ -16,7 +15,10 @@ public class UIView : MonoBehaviour
 		Events.Gameplay.OnGameOver -= OnGameOver;
 		Events.UI.OnReturnToMenu -= OnReturnToMenu;
 	}
-
+	private void Start () {
+		gameOverView.Deactivate ();
+		mainMenu.Activate ();
+	}
 	void OnStartNewGame (GameplayManager.Mode mode) {
 		mainMenu.Deactivate ();
 	}
@@ -28,5 +30,4 @@ public class UIView : MonoBehaviour
 		gameOverView.Deactivate ();
 		mainMenu.Activate ();
 	}
-
 }

@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,7 +15,7 @@ public abstract class UIButton : MonoBehaviour {
 	public virtual void Initialize () {
 		ToggleTransition (false);
 	}
-	protected virtual void OnClick () {
+	public virtual void OnClick () {
 
 	}
 	public virtual void ToggleTransition (bool state) {

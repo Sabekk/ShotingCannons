@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class MainMenu : ViewBase {
@@ -8,6 +6,8 @@ public class MainMenu : ViewBase {
 
 	GameplayManager.Mode choosenMode;
 	public bool AwailableToStart => choosenMode != GameplayManager.Mode.none;
+
+	ModeButton selectedButton;
 	private void OnEnable () {
 		Initialize ();
 		Events.UI.OnChangeMode += OnChangeCountToSpawn;
@@ -33,7 +33,7 @@ public class MainMenu : ViewBase {
 		Refresh ();
 	}
 
-	void OnChangeCountToSpawn(GameplayManager.Mode newMode) {
+	void OnChangeCountToSpawn (GameplayManager.Mode newMode) {
 		choosenMode = newMode;
 		Refresh ();
 	}
@@ -41,11 +41,55 @@ public class MainMenu : ViewBase {
 	public void StartGame () {
 		if (!AwailableToStart)
 			return;
-		else
+		else {
 			Events.Gameplay.OnStartGame.Invoke (choosenMode);
+			selectedButton = null;
+		}
 	}
 
 	void Refresh () {
 		startButton.ToggleTransition (AwailableToStart);
+	}
+
+	void CycleButtons (int dir) {
+		int currentIndex = 0;
+		if (selectedButton == null) {
+			if (buttons.Length == 0)
+				return;
+			else
+				selectedButton = buttons[0];
+		} else {
+			for (int i = 0; i < buttons.Length; i++) {
+				if (buttons[i] == selectedButton) {
+					currentIndex = i;
+					break;
+				}
+			}
+			currentIndex += dir;
+			if (currentIndex >= buttons.Length)
+				currentIndex = 0;
+			if (currentIndex < 0)
+				currentIndex = buttons.Length - 1;
+		}
+
+		selectedButton = buttons[currentIndex];
+		selectedButton.OnClick ();
+	}
+
+	public override void OnDpadAction (string type) {
+		base.OnDpadAction (type);
+		switch (type) {
+			case Dpad_RIGHT:
+			StartGame ();
+			break;
+			case Dpad_UP:
+			CycleButtons (-1);
+			break;
+			case Dpad_DOWN:
+			CycleButtons (1);
+			break;
+			default:
+			break;
+		}
 	}
 }

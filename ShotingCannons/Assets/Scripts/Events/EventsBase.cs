@@ -1,11 +1,9 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
 public static class Events {
 	static UIEvents _ui;
 	static GameplayEvents _gameplay;
+	static GamepadEvents _gamepad;
 	public static UIEvents UI {
 		get {
 			if (_ui == null)
@@ -19,6 +17,14 @@ public static class Events {
 			if (_gameplay == null)
 				_gameplay = new GameplayEvents ();
 			return _gameplay;
+		}
+	}
+
+	public static GamepadEvents Gamepad {
+		get {
+			if (_gamepad == null)
+				_gamepad = new GamepadEvents ();
+			return _gamepad;
 		}
 	}
 

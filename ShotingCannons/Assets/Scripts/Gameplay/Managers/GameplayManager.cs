@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -91,7 +90,7 @@ public class GameplayManager : MonoSingleton<GameplayManager> {
 
 	void OnGameOver () {
 		for (int i = battleField.childCount - 1; i >= 0; i--) {
-			Destroy (battleField.GetChild (0).gameObject);
+			Destroy (battleField.GetChild (i).gameObject);
 		}
 		battleField.gameObject.SetActive (false);
 	}

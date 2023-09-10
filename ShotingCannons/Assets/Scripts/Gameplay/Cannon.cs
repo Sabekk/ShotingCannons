@@ -1,14 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Cannon : MonoBehaviour {
 	[SerializeField] Bullet bullet;
 	[SerializeField] GameObject body;
-	[SerializeField] CircleCollider2D collider;
+	[SerializeField] CircleCollider2D cannonCollider;
 	[SerializeField] Transform rilfe;
-	public float Radius => collider != null ? collider.radius : 0;
-	public CircleCollider2D Collider => collider;
+	public float Radius => cannonCollider != null ? cannonCollider.radius : 0;
+	public CircleCollider2D Collider => cannonCollider;
 	public float Width => (transform as RectTransform).rect.width * currentScale;
 	float rotationSpeed = 10;
 
@@ -99,7 +97,7 @@ public class Cannon : MonoBehaviour {
 
 	void ChangeBodyStatus (bool isEnable) {
 		body.SetActive (isEnable);
-		collider.enabled = isEnable;
+		cannonCollider.enabled = isEnable;
 	}
 
 }
