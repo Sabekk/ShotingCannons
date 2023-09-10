@@ -1,10 +1,13 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Cannon : MonoBehaviour {
 	[SerializeField] Bullet bullet;
 	[SerializeField] GameObject body;
 	[SerializeField] CircleCollider2D cannonCollider;
 	[SerializeField] Transform rilfe;
+	[SerializeField] Color[] lifeColors;
+	[SerializeField] Image bodyImage;
 	public float Radius => cannonCollider != null ? cannonCollider.radius : 0;
 	public CircleCollider2D Collider => cannonCollider;
 	public float Width => (transform as RectTransform).rect.width * currentScale;
@@ -21,7 +24,7 @@ public class Cannon : MonoBehaviour {
 	float currentScale;
 	Quaternion nextRotate = new Quaternion (0, 0, 0, 0);
 
-	int lives = 1;
+	int lives = 3;
 	bool recovering;
 	float recoverTime = 2;
 	float recorerTimer;
@@ -59,6 +62,7 @@ public class Cannon : MonoBehaviour {
 		currentScale = scale;
 		nextRotation = Random.Range (0.0f, rotationTime);
 		CheckNextRotate ();
+		CheckCurrentColor ();
 	}
 	void RotateCannon () {
 		rotationTimer = 0;
@@ -98,6 +102,14 @@ public class Cannon : MonoBehaviour {
 	void ChangeBodyStatus (bool isEnable) {
 		body.SetActive (isEnable);
 		cannonCollider.enabled = isEnable;
+		if (isEnable)
+			CheckCurrentColor ();
 	}
 
+	void CheckCurrentColor () {
+		int indexOfColor = lives - 1;
+		if (lifeColors.Length < lives)
+			indexOfColor = lifeColors.Length - 1;
+		bodyImage.color = lifeColors[indexOfColor];
+	}
 }

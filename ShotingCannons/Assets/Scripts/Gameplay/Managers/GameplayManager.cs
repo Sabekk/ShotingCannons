@@ -28,9 +28,6 @@ public class GameplayManager : MonoSingleton<GameplayManager> {
 		widthfOfField = battleField.rect.width;
 		heightfOfField = battleField.rect.height;
 	}
-	private void FixedUpdate () {
-
-	}
 
 	private void OnDestroy () {
 		Events.Gameplay.OnStartGame -= OnStartNewGame;

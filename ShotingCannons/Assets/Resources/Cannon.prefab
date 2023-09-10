@@ -113,7 +113,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: NaN}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &828599028512779281
@@ -130,8 +130,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bullet: {fileID: 1858130707800476359, guid: 9dcb971d0525bff4d80ca543bc09b4ff, type: 3}
   body: {fileID: 8472061488010359772}
-  collider: {fileID: 2680633114350295477}
+  cannonCollider: {fileID: 2680633114350295477}
   rilfe: {fileID: 5906279062414259950}
+  lifeColors:
+  - {r: 0.745283, g: 0.25663045, b: 0.25663045, a: 1}
+  - {r: 0.6603774, g: 0.44096676, b: 0.17132434, a: 1}
+  - {r: 0, g: 0.5176471, b: 0.15294118, a: 1}
+  bodyImage: {fileID: 5978583369017371705}
 --- !u!50 &9188436898682880019
 Rigidbody2D:
   serializedVersion: 4
