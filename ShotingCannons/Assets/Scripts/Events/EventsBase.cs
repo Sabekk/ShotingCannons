@@ -95,4 +95,33 @@ public static class Events {
 			InvokeBase ();
 		}
 	}
+
+	public class Event<T1, T2> : EventBase {
+		event Action<T1, T2> _event;
+
+		public Event () : base () {
+		}
+		public void Subscribe (Action<T1, T2> subscriber) {
+			_event += subscriber;
+		}
+		public void Unsubscribe (Action<T1, T2> subscriber) {
+			_event -= subscriber;
+		}
+
+		public static Event<T1, T2> operator + (Event<T1, T2> e, Action<T1, T2> subscriber) {
+			e.Subscribe (subscriber);
+			return e;
+		}
+		public static Event<T1, T2> operator - (Event<T1, T2> e, Action<T1, T2> subscriber) {
+			e.Unsubscribe (subscriber);
+			return e;
+		}
+
+		public void Invoke (T1 args1, T2 args2) {
+			if (_event != null)
+				_event.Invoke (args1, args2);
+
+			InvokeBase ();
+		}
+	}
 }

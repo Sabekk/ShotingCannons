@@ -9,14 +9,13 @@ public class MainMenu : ViewBase {
 
 	ModeButton selectedButton;
 	private void OnEnable () {
-		Initialize ();
 		Events.UI.OnChangeMode += OnChangeCountToSpawn;
 	}
 	private void OnDisable () {
 		Events.UI.OnChangeMode -= OnChangeCountToSpawn;
 	}
 
-	private void Initialize () {
+	protected override void Initialize () {
 		foreach (var button in buttons) {
 			button.Initialize ();
 		}

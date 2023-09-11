@@ -7,6 +7,10 @@ public abstract class ViewBase : MonoBehaviour {
 	public const string Dpad_DOWN = "DpadDown";
 	public const string Dpad_LEFT = "DpadLeft";
 	public const string Dpad_RIGHT = "DpadRight";
+
+	private void Start () {
+		Initialize ();
+	}
 	public virtual void Activate () {
 		view.SetActive (true);
 		Events.Gamepad.OnDpadUp += OnDpadUp;
@@ -20,6 +24,10 @@ public abstract class ViewBase : MonoBehaviour {
 		Events.Gamepad.OnDpadDown -= OnDpadDown;
 		Events.Gamepad.OnDpadLeft -= OnDpadLeft;
 		Events.Gamepad.OnDpadRight -= OnDpadRight;
+	}
+
+	protected virtual void Initialize () {
+
 	}
 
 	public virtual void OnDpadAction (string type) {

@@ -78,7 +78,7 @@ public class Cannon : MonoBehaviour {
 	void Shot () {
 		shotingTimer = 0;
 		Bullet bullet = Instantiate (this.bullet, rilfe.position, rilfe.rotation);
-		GameplayManager.Instance.MakeShotInBattlefield (bullet);
+		Events.Gameplay.OnBulletShoted.Invoke (bullet);
 		bullet.Initialize (currentScale, gameObject);
 	}
 	void OnGetHit (GameObject hittedObject) {

@@ -355,6 +355,7 @@
 "Assets/Scripts/Events/GamepadEvents.cs"
 "Assets/Scripts/Events/GameplayEvents.cs"
 "Assets/Scripts/Events/UIEvents.cs"
+"Assets/Scripts/Gameplay/BattleField.cs"
 "Assets/Scripts/Gameplay/Bullet.cs"
 "Assets/Scripts/Gameplay/Cannon.cs"
 "Assets/Scripts/Gameplay/Managers/GameplayManager.cs"
